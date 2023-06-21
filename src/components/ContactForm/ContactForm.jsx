@@ -11,8 +11,8 @@ class ContactForm extends Component {
   state = { ...INITIAL_STATE };
 
   handleChange = e => {
-    const { value, name, type, checked } = e.target;
-    this.setState({ [name]: type === 'checkbox' ? checked : value });
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
   };
 
   handleSubmit = e => {
