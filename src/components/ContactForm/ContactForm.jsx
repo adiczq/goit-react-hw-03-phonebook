@@ -10,9 +10,21 @@ const INITIAL_STATE = {
 class ContactForm extends Component {
   state = { ...INITIAL_STATE };
 
+  componentDidMount() {
+    const storedName = localStorage.getItem('name');
+    const storedNumber = localStorage.getItem('number');
+    if (storedName) {
+      this.setState({ name: storedName });
+    }
+    if (storedNumber) {
+      this.setState({ number: storedNumber });
+    }
+  }
+
   handleChange = e => {
     const { value, name, type, checked } = e.target;
     this.setState({ [name]: type === 'checkbox' ? checked : value });
+    localStorage.setItem(name, value);
   };
 
   handleSubmit = e => {
@@ -25,6 +37,8 @@ class ContactForm extends Component {
     const newContact = { name, number, id: nanoid() };
     this.props.onSubmit(newContact);
     this.reset();
+    localStorage.removeItem('name');
+    localStorage.removeItem('number');
   };
 
   reset = () => {
